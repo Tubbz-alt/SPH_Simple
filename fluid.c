@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     water_volume.max_z = 0.8;
     
     // Simulation parameters
-    params.number_fluid_particles = 4000;  
+    params.number_fluid_particles = 1000;  
     params.rest_density = 1000.0;
     params.g = 9.8;
     params.alpha = 0.02;
