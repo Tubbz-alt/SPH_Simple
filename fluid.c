@@ -297,7 +297,7 @@ void updateAccelerations(fluid_particle *fluid_particles, boundary_particle *bou
     ///////////////////////////////////////////////////////////////////////////////
     // Place on accelerator - make sure to specify all particle arrays as present
     ///////////////////////////////////////////////////////////////////////////////
-    #pragma acc parallel loop present(fluid_particles, boundary_particles,param[0:1])
+    #pragma acc parallel loop present(fluid_particles, boundary_particles,params[0:1])
     for(i=0; i<num_fluid_particles; i++) {
         double ax = 0.0;
         double ay = 0.0;
