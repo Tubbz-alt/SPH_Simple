@@ -8,4 +8,5 @@ source $MODULESHOME/init/bash
 module load cudatoolkit
 
 cd $PBS_O_WORKDIR
-aprun ./sph-acc.out
+time -p aprun ./sph-acc.out
+

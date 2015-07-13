@@ -5,4 +5,4 @@
 #PBS -N SPHcpu
 
 cd $PBS_O_WORKDIR
-aprun ./sph.out
+time -p aprun ./sph.out
