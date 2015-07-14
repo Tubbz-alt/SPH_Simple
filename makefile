@@ -7,7 +7,7 @@ cpu:
 	$(CC) $(CFLAGS) geometry.c fileio.c fluid.c -o sph.out
 
 acc:
-	$(CC) $(CFLAGS) -acc -Minfo=acc geometry.c fileio.c fluid.c -o sph-acc.out
+	$(CC) $(CFLAGS) -acc -Minfo=acc -ta=tesla:nollvm geometry.c fileio.c fluid.c -o sph-acc.out
 
 clean:
 	rm -rf *.o *.out 
