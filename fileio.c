@@ -15,7 +15,7 @@ void writeFile(fluid_particle *particles, int fileNum, param *params)
     char name[64];
     char* user;
     user = getenv ("USER");
-    sprintf(name, "%s_work/sim-%d.csv", user, fileNum);
+    sprintf(name, "/lustre/atlas/scratch/%s/stf007/sim-%d.csv", user, fileNum);
     fp = fopen (name,"w");
     if (!fp) {
         printf("ERROR: error opening file %s\n",name);
@@ -38,7 +38,7 @@ void writeBoundaryFile(boundary_particle *boundary, param *params)
     char* user;
     user = getenv ("USER");
     char name[64];
-    sprintf(name, "%s_work/boundary.csv", user);
+    sprintf(name, "/lustre/atlas/scratch/%s/stf007/boundary.csv", user);
     fp = fopen ( name,"w" );
     if (!fp) {
         printf("ERROR: error opening file %s\n",name);
