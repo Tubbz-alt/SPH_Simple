@@ -217,7 +217,7 @@ void updatePressures(fluid_particle *fluid_particles, param *params)
     int i, j;
     int num_particles = params->number_fluid_particles;
 
-    #pragma acc parallel loop present(fluid_particles, params[0:1])
+    #pragma acc parallel loop vector_length(32) present(fluid_particles, params[0:1])
     for(i=0; i<num_particles; i++) {
         double3 p_pos = fluid_particles[i].pos;
         double3 p_v   = fluid_particles[i].v;
@@ -296,7 +296,7 @@ void updateAccelerations(fluid_particle *fluid_particles, boundary_particle *bou
     ///////////////////////////////////////////////////////////////////////////////
     // Place on accelerator - make sure to specify all particle arrays as present
     ///////////////////////////////////////////////////////////////////////////////
-    #pragma acc parallel loop present(fluid_particles, boundary_particles, params[0:1])
+    #pragma acc parallel loop vector_length(32) present(fluid_particles, boundary_particles, params[0:1])
     for(i=0; i<num_fluid_particles; i++) {
         double ax = 0.0;
         double ay = 0.0;
@@ -327,7 +327,7 @@ void updateAccelerations(fluid_particle *fluid_particles, boundary_particle *bou
         fluid_particles[i].a.z = az;
     }
 
-    #pragma acc parallel loop present(fluid_particles, boundary_particles, params[0:1])
+    #pragma acc parallel loop vector_length(32) present(fluid_particles, boundary_particles, params[0:1])
     for(i=0; i<num_fluid_particles; i++) {
         double ax = fluid_particles[i].a.x;
         double ay = fluid_particles[i].a.y;
