@@ -222,7 +222,8 @@ void updatePressures(fluid_particle *fluid_particles, param *params)
         double3 p_pos = fluid_particles[i].pos;
         double3 p_v   = fluid_particles[i].v;
         double density = fluid_particles[i].density;
-        #pragma acc loop seq
+
+        #pragma acc loop reduction(+:density)
         for(j=0; j<num_particles; j++) {
             double3 q_pos = fluid_particles[j].pos;
             double3 q_v   = fluid_particles[j].v;
@@ -305,7 +306,7 @@ void updateAccelerations(fluid_particle *fluid_particles, boundary_particle *bou
         double3 p_v   = fluid_particles[i].v;
         double p_density = fluid_particles[i].density;
         double p_pressure = fluid_particles[i].pressure;
-        #pragma acc loop seq
+        #pragma acc loop reduction(+:ax,ay,az)
         for(j=0; j<num_fluid_particles; j++) {
             if (i!=j) {
                 double3 q_pos = fluid_particles[j].pos;
@@ -333,7 +334,7 @@ void updateAccelerations(fluid_particle *fluid_particles, boundary_particle *bou
         double az = fluid_particles[i].a.z;
         double3 p_pos = fluid_particles[i].pos;
 
-        #pragma acc loop seq
+        #pragma acc loop reduction(+:ax,ay,az)
         for (j=0; j<num_boundary_particles; j++) {
             double3 k_pos = boundary_particles[j].pos;
             double3 k_n   = boundary_particles[j].n;
