@@ -323,13 +323,10 @@ void updatePositions(fluid_particle *fluid_particles, param *params)
 }
 
 // Seed simulation with Euler step v(t-dt/2) needed by leap frog integrator
+// Should calculate all accelerations but assuming just g simplifies acc port
 void eulerStart(fluid_particle* fluid_particles,
                 boundary_particle* boundary_particles, param *params)
 {
-    updatePressures(fluid_particles, params);
-
-    updateAccelerations(fluid_particles, boundary_particles, params);
-
     // Set V (t0 - dt/2)
     double dt_half = params->time_step/2.0;
 
@@ -337,12 +334,11 @@ void eulerStart(fluid_particle* fluid_particles,
     {
         // Velocity at t + dt/2
         double3 v      = fluid_particles[i].v;
-        double3 a      = fluid_particles[i].a;
         double3 v_half;
 
-        v_half.x = v.x - a.x * dt_half;
-        v_half.y = v.y - a.y * dt_half;
-        v_half.z = v.z - a.z * dt_half;
+        v_half.x = v.x;
+        v_half.y = v.y;
+        v_half.z = v.z - params->g * dt_half;
 
         fluid_particles[i].v_half = v_half;
     }
