@@ -156,6 +156,7 @@ void updatePressures(fluid_particle *fluid_particles, param *params)
 {
     int num_particles = params->number_fluid_particles;
 
+   #pragma acc parallel loop present(fluid_particles, params)
     for(int i=0; i<num_particles; i++) {
         double3 p_pos = fluid_particles[i].pos;
         double3 p_v   = fluid_particles[i].v;
@@ -237,6 +238,7 @@ void updateAccelerations(fluid_particle *fluid_particles,
     int num_fluid_particles = params->number_fluid_particles;
     int num_boundary_particles = params->number_boundary_particles;
 
+   #pragma acc parallel loop present(fluid_particles, params[0:1])
     for(int i=0; i<num_fluid_particles; i++) {
         double ax = 0.0;
         double ay = 0.0;
@@ -268,6 +270,7 @@ void updateAccelerations(fluid_particle *fluid_particles,
         fluid_particles[i].a.z = az;
     }
 
+    #pragma acc parallel loop present(fluid_particles, boundary_particles, params)
     for(int i=0; i<num_fluid_particles; i++) {
         double ax = fluid_particles[i].a.x;
         double ay = fluid_particles[i].a.y;
@@ -297,6 +300,7 @@ void updatePositions(fluid_particle *fluid_particles, param *params)
 {
     double dt = params->time_step;
 
+    #pragma acc parallel loop present(fluid_particles)
     for(int i=0; i<params->number_fluid_particles; i++) {
 
         // Velocity at t + dt/2
