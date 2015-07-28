@@ -52,25 +52,20 @@ struct PARAM {
     int number_fluid_particles;
     int number_boundary_particles;
     int number_steps;
+    int steps_per_frame;
 }; // Simulation paramaters
 
 ////////////////////////////////////////////////
 // Function prototypes
 ////////////////////////////////////////////////
 
-//double W(fluid_particle *p, fluid_particle *q, double h);
-//double del_W(fluid_particle *p, fluid_particle *q, double h);
-//double computePressure(fluid_particle *p, param *params);
-//void updatePressures(fluid_particle *fluid_particles, param *params);
-//void computeAcceleration(fluid_particle *p, fluid_particle *q, param *params);
-//void computeBoundaryAcceleration(fluid_particle *p, boundary_particle *q, param *params);
-//void updateParticle(fluid_particle *p, param *params);
-//void updatePositions(fluid_particle *fluid_particles, param *params);
 void updatePositions(fluid_particle *fluid_particles, param *params);
 void updatePressures(fluid_particle *fluid_particles, param *params);
 void updateAccelerations(fluid_particle *fluid_particles, boundary_particle *boundary_particles, param *params);
 double computeDensity(double3 p_pos, double3 p_v, double3 q_pos, double3 q_v, param *params);
 void eulerStart(fluid_particle* fluid_particles, boundary_particle *boundary_particles, param *params);
-void initParticles(fluid_particle* fluid_particles, boundary_particle* boundary_particles, AABB* water, AABB* boundary, param* params);
+void initParticles(fluid_particle** fluid_particles, boundary_particle** boundary_particles, AABB* water, AABB* boundary, param* params);
+void initParams(AABB* water_volume, AABB* boundary_volume, param* params);
+void finalizeParticles(fluid_particle *fluid_particles, boundary_particle *boundary_particles);
 
 #endif

@@ -6,16 +6,17 @@
 #include "fileio.h"
 #include "fluid.h"
 
+static int fileNum = 0;
+
 // Write fluid particle data to file
-void writeFile(fluid_particle *particles, int fileNum, param *params)
+void writeFile(fluid_particle *particles, param *params)
 {
     fluid_particle *p;
     FILE *fp ;
     int i;
     char name[64];
     char* user;
-    user = getenv ("USER");
-    sprintf(name, "%s_work/sim-%d.csv", user, fileNum);
+    sprintf(name, "sim-%d.csv", fileNum);
     fp = fopen (name,"w");
     if (!fp) {
         printf("ERROR: error opening file %s\n",name);
@@ -26,6 +27,7 @@ void writeFile(fluid_particle *particles, int fileNum, param *params)
         fprintf(fp,"%f,%f,%f\n",p->pos.x,p->pos.y,p->pos.z);
     }
     fclose(fp);
+    fileNum++;
     printf("wrote file: %s\n", name);
 }
 
@@ -38,7 +40,7 @@ void writeBoundaryFile(boundary_particle *boundary, param *params)
     char* user;
     user = getenv ("USER");
     char name[64];
-    sprintf(name, "%s_work/boundary.csv", user);
+    sprintf(name, "boundary.csv", user);
     fp = fopen ( name,"w" );
     if (!fp) {
         printf("ERROR: error opening file %s\n",name);
