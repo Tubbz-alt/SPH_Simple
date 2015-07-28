@@ -1,13 +1,20 @@
 CC=cc
-CFLAGS=-O3 -Minline=levels:5
+CFLAGS=-O3 -c99 -Minline=levels:5
 
-all: cpu acc
+all: cpu acc omp
 
-cpu:
-	$(CC) $(CFLAGS) geometry.c fileio.c fluid.c -o sph.out
+SRC:=	src/fluid.c  \
+	src/fileio.c \
+	src/geometry.c
 
-acc:
-	$(CC) $(CFLAGS) -acc -Minfo=acc -ta=tesla:nollvm geometry.c fileio.c fluid.c -o sph-acc.out
+cpu: $(SRC)
+	$(CC) $(CFLAGS) $^ -o sph-cpu.out
+
+acc: $(SRC)
+	$(CC) $(CFLAGS) -acc -Minfo=acc -ta=nvidia,cc35,nollvm $^ -o sph-acc.out
+
+omp: $(SRC)
+	$(CC) $(CFLAGS) -mp $^ -o sph-omp.out
 
 clean:
-	rm -rf *.o *.out 
+	rm -rf *.o *.out

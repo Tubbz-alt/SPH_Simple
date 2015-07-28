@@ -3,7 +3,7 @@
 
 #include "fluid.h"
 
-void writeFile(fluid_particle *particles, int fileNum, param *params);
+void writeFile(fluid_particle *particles, param *params);
 void writeBoundaryFile(boundary_particle *boundary, param *params);
 
 #endif
