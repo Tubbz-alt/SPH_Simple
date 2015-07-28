@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     eulerStart(fluid_particles, boundary_particles, &params);
 
     // Main simulation loop
+    #pragma acc enter data copyin(fluid_particles[0:params.number_fluid_particles], boundary_particles[0:params.number_boundary_particles],params[0:1])
     for(int n=0; n<params.number_steps; n++) {
         updatePressures(fluid_particles, &params);
 
@@ -29,10 +30,12 @@ int main(int argc, char *argv[])
         updatePositions(fluid_particles, &params);
 
         if (n % params.steps_per_frame == 0) {
+            #pragma acc update host(fluid_particles[0:params.number_fluid_particles])
             writeFile(fluid_particles, &params);
         }
     }
 
+    #pragma acc exit data delete(fluid_particles[0:params.number_fluid_particles],boundary_particles[0:params.number_boundary_particles],params[0:1])
     finalizeParticles(fluid_particles, boundary_particles);
     return 0;
 }
