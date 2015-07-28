@@ -89,9 +89,13 @@ double del_W(double3 p_pos, double3 q_pos, double h)
 double boundaryGamma(double3 p_pos, double3 k_pos, double3 k_n, double h, double speed_sound)
 {
     // Radial distance between p,q
-    double r = sqrt((p_pos.x-k_pos.x)*(p_pos.x-k_pos.x) + (p_pos.y-k_pos.y)*(p_pos.y-k_pos.y) + (p_pos.z-k_pos.z)*(p_pos.z-k_pos.z));
+    double r = sqrt((p_pos.x-k_pos.x)*(p_pos.x-k_pos.x)
+                  + (p_pos.y-k_pos.y)*(p_pos.y-k_pos.y)
+                  + (p_pos.z-k_pos.z)*(p_pos.z-k_pos.z));
     // Distance to p normal to surface particle
-    double y = sqrt((p_pos.x-k_pos.x)*(p_pos.x-k_pos.x)*(k_n.x*k_n.x) + (p_pos.y-k_pos.y)*(p_pos.y-k_pos.y)*(k_n.y*k_n.y) + (p_pos.z-k_pos.z)*(p_pos.z-k_pos.z)*(k_n.z*k_n.z));
+    double y = sqrt((p_pos.x-k_pos.x)*(p_pos.x-k_pos.x)*(k_n.x*k_n.x)
+                  + (p_pos.y-k_pos.y)*(p_pos.y-k_pos.y)*(k_n.y*k_n.y)
+                  + (p_pos.z-k_pos.z)*(p_pos.z-k_pos.z)*(k_n.z*k_n.z));
     // Tangential distance
     double x = r-y;
 
